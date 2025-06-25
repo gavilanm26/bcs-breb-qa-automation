@@ -1,0 +1,86 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+
+    }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:4.2.33"
+        classpath "net.serenity-bdd:serenity-single-page-report:4.2.33"
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: "net.serenity-bdd.serenity-gradle-plugin"
+
+
+group = 'com.bcs'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+ext {
+    serenityVersion = '4.2.33'
+    junitVersion = '5.13.1'
+    poiVesrion = '5.4.1'
+    loggerslf4j = '2.0.17'
+    restAssuredVersion = '5.5.5'
+}
+
+dependencies {
+    // ✅ Selenium + Serenity + Cucumber + Screenplay
+    implementation("net.serenity-bdd:serenity-core:${serenityVersion}")
+    implementation("net.serenity-bdd:serenity-junit:${serenityVersion}")
+    implementation("net.serenity-bdd:serenity-screenplay:${serenityVersion}")
+    implementation("net.serenity-bdd:serenity-cucumber:${serenityVersion}")
+    implementation("net.serenity-bdd:serenity-screenplay-webdriver:${serenityVersion}")
+    implementation("net.serenity-bdd:serenity-screenplay-rest:${serenityVersion}")
+    implementation("net.serenity-bdd:serenity-rest-assured:${serenityVersion}")
+
+    // ✅ JUnit 4
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${junitVersion}")
+
+    // ✅ Validaciones expresivas
+    implementation("org.hamcrest:hamcrest:2.2")
+
+    // ✅ Logging (para consola en pruebas)
+    testImplementation("org.slf4j:slf4j-api:${loggerslf4j}")
+    testImplementation("org.slf4j:slf4j-log4j12:${loggerslf4j}")
+
+    // ✅ Apache POI (Excel, Word)
+    implementation("org.apache.poi:poi:${poiVesrion}")
+    implementation("org.apache.poi:poi-ooxml:${poiVesrion}")
+
+    // ✅ RestAssured para pruebas de API REST
+    implementation("io.rest-assured:rest-assured:${restAssuredVersion}")
+    implementation("io.rest-assured:json-path:${restAssuredVersion}")
+    implementation("io.rest-assured:json-schema-validator:${restAssuredVersion}")
+
+    // ✅ Utilidades comunes para Strings, objetos, fechas, etc.
+    implementation("org.apache.commons:commons-lang3:3.17.0")
+
+    // ✅ Librería de cifrado y seguridad (firmas, AES, SHA, certificados)
+    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+
+    // ✅ Conversión entre objetos Java y JSON (serialización/deserialización)
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
+
+    testImplementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+    testImplementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
+
+}
